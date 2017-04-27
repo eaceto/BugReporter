@@ -147,7 +147,9 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
         mail.setSubject("[\(appName())] New issue reported from Bug Reporter")
         mail.setToRecipients(mailRecipients())
         
-        let emailBody = "<h1>Bug Report</h1>\n<code>\(String(describing: report.json()).replacingOccurrences(of: "\n", with: "</br>"))</code>"
+        let htmlReport = String(describing: report.json()).replacingOccurrences(of: "\n", with: "</br>").replacingOccurrences(of: " ", with: "&nbsp;")
+        
+        let emailBody = "<h1>Bug Report</h1>\n<code>\(htmlReport)</code>"
         
         var idx = 0
         for image in report.images {
