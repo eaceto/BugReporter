@@ -40,7 +40,7 @@
     Byte input[a.length];
     [a getBytes:input range:NSMakeRange(0, a.length)];
     
-    Byte o[a.length + 1];
+    char o[a.length + 1];
     int i = 0;
     for (; i < a.length; i++) {
         o[i] = (Byte) (input[i] ^ key[i % len]);
