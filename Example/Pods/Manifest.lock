@@ -1,0 +1,19 @@
+PODS:
+  - BugReporter (0.1.0):
+    - SwiftyJSON (~> 3.1)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - BugReporter (from `../`)
+
+EXTERNAL SOURCES:
+  BugReporter:
+    :path: ../
+
+SPEC CHECKSUMS:
+  BugReporter: df219f628e397d67aec747241525c29e2707ea68
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: 75b07b2e87f0691d04d3e3d6ef3afebb7c5b62f7
+
+COCOAPODS: 1.2.0
