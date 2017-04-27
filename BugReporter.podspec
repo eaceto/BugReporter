@@ -21,10 +21,10 @@ Pod::Spec.new do |s|
 Bug Reporter is a tool that simplifies the process of reporting bugs and comments from users to developers. 
 			  DESC
 
-  s.homepage         = 'https://github.com/Kimi/BugReporter'
+  s.homepage         = 'https://github.com/eaceto/BugReporter'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Kimi' => 'kimi@wolfram.io' }
-  s.source           = { :git => 'https://github.com/Kimi/BugReporter.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/eaceto/BugReporter.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/eaceto'
 
   s.ios.deployment_target = '8.0'
