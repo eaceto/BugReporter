@@ -16,10 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BugReporterDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        _ = BugReporter.setup(with: launchOptions)  // call as soon as possible
-                       .delegate(self)  // set in order to receive events
-                       .report(using: .share)   // can set it or change it later
-                       .debug(false)  // enable or disable debug at any time
+        _ = BugReporter.setup(with: launchOptions)      // call as soon as possible
+                       .delegate(self)                  // set in order to receive events (optional)
+                       .report(using: .userSelect)      // let user decide how. You can change this later
+                       .debug(false)                    // enable or disable debug at any time
         
         return true
     }
@@ -34,12 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BugReporterDelegate {
         debugPrint("userDidCancelAReport: \(report)")
     }
     
-    func userDidSendAReport(_ report : Report, using mode: ReportingMode) {
-        debugPrint("userDidSendAReport: \(report) using: \(mode.rawValue)")
+    func userDidSendAReport(_ report : Report) {
+        debugPrint("userDidSendAReport: \(report) using: \(report.sendMechanism?.rawValue ?? "undefined")")
     }
     
-    func userDidSaveAReport(_ report: Report, using mode: ReportingMode) {
-        debugPrint("userDidSaveAReport: \(report) using: \(mode.rawValue)")
+    func userDidSaveAReport(_ report: Report) {
+        debugPrint("userDidSaveAReport: \(report) using: \(report.sendMechanism?.rawValue ?? "undefined")")
     }
     
     func appendMoreImages(to report: Report) -> [UIImage]? {

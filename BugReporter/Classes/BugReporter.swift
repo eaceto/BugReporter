@@ -10,6 +10,12 @@ import UIKit
 import MessageUI
 import Photos
 
+internal enum ReportStatus : String {
+    case sent
+    case draft
+    case cancelled
+}
+
 public enum ReportingMode : String {
     case disabled
     case email
@@ -22,8 +28,8 @@ public protocol BugReporterDelegate {
     // Report life cycle
     func userDidStartAReport(_ report : Report)
     func userDidCancelAReport(_ report : Report)
-    func userDidSendAReport(_ report : Report, using mode: ReportingMode)
-    func userDidSaveAReport(_ report : Report, using mode: ReportingMode)
+    func userDidSendAReport(_ report : Report)
+    func userDidSaveAReport(_ report : Report)
     
     func appendMoreImages(to report: Report) -> [UIImage]?
 }
@@ -153,33 +159,38 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             
             switch self.reportingMode {
             case .email:
-                if !MFMailComposeViewController.canSendMail() {
-                    if BugReporter.debugEnabled {
-                        debugPrint("Mail services are not available")
-                    }
-                    return
-                }
-                
-                if BugReporter.debugEnabled {
-                    debugPrint("Reporting information\n====================\n\(report.json())\n====================")
-                }
-                
-                self.emailReport(report, from: topVC)
-                
+                self.sendReportUsingEmail(report, from: topVC)
                 return
                 
             case .share:
-                
-                if !ShareViaPDFHelper.share(report: report, using: topVC) {
-                    if BugReporter.debugEnabled {
-                        debugPrint("Fail to create HTML report")
-                    }
-                }
+                self.sendReportUsingActivityController(report, from: topVC)
                 break
+                
             case .userSelect:
+                let title = "Send report"
+                let message = "How would like to send this report?"
+                let cancel = "Don't send it"
+                let share = "Using another app"
+                let email = "Via email"
                 
-
-                break
+                let actionSheet = UIAlertController.init(title: title, message: message, preferredStyle: .actionSheet)
+                actionSheet.popoverPresentationController?.sourceView = topVC.view
+                
+                actionSheet.addAction(UIAlertAction.init(title: email, style: .default, handler: { action in
+                    self.sendReportUsingEmail(report, from: topVC)
+                }))
+                
+                actionSheet.addAction(UIAlertAction.init(title: share, style: .default, handler: { action in
+                    self.sendReportUsingActivityController(report, from: topVC)
+                }))
+                
+                actionSheet.addAction(UIAlertAction.init(title: cancel, style: .destructive, handler: { action in
+                    self.didFinishedProcessing(report, status: .cancelled)
+                }))
+                
+                topVC.present(actionSheet, animated: true, completion: nil)
+                return
+                
             case .disabled:
                 if BugReporter.debugEnabled {
                     debugPrint("Reporting is disabled")
@@ -187,7 +198,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
                 break
             }
             
-            self.currentReport = nil
+            self.didFinishedProcessing(report, status: .cancelled)
         })
     }
     
@@ -267,38 +278,68 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        switch result {
-        case .sent:
+        if let report = self.currentReport {
+            switch result {
+            case .sent:
+                self.didFinishedProcessing(report, status: .sent)
+                break
+            case .saved:
+                self.didFinishedProcessing(report, status: .draft)
+                break
+            default:
+                self.didFinishedProcessing(report, status: .cancelled)
+                break
+            }
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func sendReportUsingEmail(_ report : Report, from vc : UIViewController) {
+        if !MFMailComposeViewController.canSendMail() {
             if BugReporter.debugEnabled {
-                debugPrint("Report sent")
+                debugPrint("Mail services are not available")
             }
-            
-            if let d = self.lifeCycleDelegate, let report = self.currentReport {
-                d.userDidSendAReport(report, using: .email)
-            }
-            break
-        case .saved:
-            if BugReporter.debugEnabled {
-                debugPrint("Report saved")
-            }
-            
-            if let d = self.lifeCycleDelegate, let report = self.currentReport {
-                d.userDidSaveAReport(report, using: .email)
-            }
-            break
-        default:
-            if BugReporter.debugEnabled {
-                debugPrint("Report not sent neither saved")
-            }
-            
-            if let d = self.lifeCycleDelegate, let report = self.currentReport {
-                d.userDidCancelAReport(report)
-            }
-            break
+            return
         }
         
-        currentReport = nil
+        if BugReporter.debugEnabled {
+            debugPrint("Reporting information\n====================\n\(report.json())\n====================")
+        }
         
-        controller.dismiss(animated: true, completion: nil)
+        self.emailReport(report, from: vc)
+    }
+    
+    fileprivate func sendReportUsingActivityController(_ report : Report, from vc : UIViewController) {
+        if !ShareViaPDFHelper.share(report: report, using: vc) {
+            if BugReporter.debugEnabled {
+                debugPrint("Fail to create HTML report")
+            }
+        }
+    }
+    
+    internal func didFinishedProcessing(_ report : Report, status : ReportStatus) {
+        if let d = lifeCycleDelegate {
+            switch status {
+            case .cancelled:
+                if BugReporter.debugEnabled {
+                    debugPrint("Report not sent neither saved")
+                }
+                d.userDidCancelAReport(report)
+                break
+            case .sent:
+                if BugReporter.debugEnabled {
+                    debugPrint("Report sent")
+                }
+                d.userDidSendAReport(report)
+                break
+            case .draft:
+                if BugReporter.debugEnabled {
+                    debugPrint("Report saved")
+                }
+                d.userDidSaveAReport(report)
+                break
+            }
+        }
+        self.currentReport = nil
     }
 }

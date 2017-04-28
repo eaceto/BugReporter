@@ -1,6 +1,6 @@
 {
   "name": "BugReporter",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "summary": "A simple and elegant bug reporting tool for you apps.",
   "description": "Bug Reporter is a tool that simplifies the process of reporting bugs and comments from users to developers.",
   "homepage": "https://github.com/eaceto/BugReporter",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/eaceto/BugReporter.git",
-    "tag": "0.1.6"
+    "tag": "0.1.7"
   },
   "social_media_url": "https://twitter.com/eaceto",
   "platforms": {
@@ -21,7 +21,7 @@
   },
   "source_files": "BugReporter/Classes/**/*",
   "resource_bundles": {
-    "BugReporterBundle": [
+    "BugReporter": [
       "BugReporter/Assets/**/*"
     ]
   },

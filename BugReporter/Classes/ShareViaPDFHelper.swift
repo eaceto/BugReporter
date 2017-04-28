@@ -40,6 +40,7 @@ class ShareViaPDFHelper: NSObject {
         activityVC.popoverPresentationController?.sourceView = topVC.view
         activityVC.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) -> Void in
             try? FileManager.default.removeItem(atPath: path)
+            BugReporter.shared.didFinishedProcessing(report, status: .cancelled)
         }
         
         topVC.present(activityVC, animated: true, completion: nil)

@@ -19,6 +19,8 @@ public class Report: NSObject {
     internal var currentViewController : UIViewController?
     internal var created : Date
     
+    public internal(set) var sendMechanism : ReportingMode?
+    
     private override init() {
         self.created = Date()
         super.init()
