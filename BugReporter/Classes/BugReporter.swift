@@ -178,7 +178,10 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
         mail.setToRecipients(mailRecipients())
         
         let json = report.json()
-        let htmlReport = String(describing: json).replacingOccurrences(of: "\n", with: "</br>").replacingOccurrences(of: " ", with: "&nbsp;") //FIXME
+        
+        let htmlReport = String(describing: json).htmlEscape()
+            .replacingOccurrences(of: "\n", with: "</br>")
+            .replacingOccurrences(of: " ", with: "&nbsp;")
         
         let emailBody = "<h1>Bug Report</h1>\n" +
             "<h2>Notes</h2>\n" +

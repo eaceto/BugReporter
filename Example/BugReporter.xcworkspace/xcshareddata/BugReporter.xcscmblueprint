@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "157FCE74D19BFBC13AAF8044E298024F9AC983E1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DA1C8EBA90D8BE58CD8B8AF64CBEFEAA71DD166F" : 9223372036854775807,
+    "157FCE74D19BFBC13AAF8044E298024F9AC983E1" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9C63281E-1C9B-4F81-B131-431C990B2624",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DA1C8EBA90D8BE58CD8B8AF64CBEFEAA71DD166F" : "BugReporter\/BugReporter\/Classes\/swift-html-entities\/",
+    "157FCE74D19BFBC13AAF8044E298024F9AC983E1" : "BugReporter\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BugReporter",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Example\/BugReporter.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/eaceto\/BugReporter.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "157FCE74D19BFBC13AAF8044E298024F9AC983E1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/IBM-Swift\/swift-html-entities.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA1C8EBA90D8BE58CD8B8AF64CBEFEAA71DD166F"
+    }
+  ]
+}
