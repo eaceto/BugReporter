@@ -43,6 +43,24 @@ class DeviceHelper: NSObject {
         return UIDevice.current.systemName
     }
     
+    class func systemFileSystemSize() -> Int64? {
+        guard let systemAttributes = try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory() as String),
+            let totalSize = (systemAttributes[.systemSize] as? NSNumber)?.int64Value else {
+                return nil
+        }
+        
+        return totalSize
+    }
+    
+    class func systemFileSystemFreeSize() -> Int64? {
+        guard let systemAttributes = try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory() as String),
+            let freeSize = (systemAttributes[.systemFreeSize] as? NSNumber)?.int64Value else {
+                return nil
+        }
+        
+        return freeSize
+    }
+    
     class func deviceDescription() -> JSON {
         var j = JSON(["model" : model(),
                       "multitasking" : multitaskingSupported(),
@@ -51,7 +69,20 @@ class DeviceHelper: NSObject {
         
         j["battery"].dictionaryObject = ["level" : batteryLevel(), "state" : batteryState()]
         
+        let fsSize = systemFileSystemSize()
+        let fsFreeSize = systemFileSystemFreeSize()
+        
+        if fsSize != nil || fsFreeSize != nil {
+            var fs = [String:String]()
+            if let s = fsSize {
+                fs["capacity"] = "\(Float(s) / 1024.0 / 1024.0) MB"
+            }
+            if let f = fsFreeSize {
+                fs["free"] = "\(Float(f) / 1024.0 / 1024.0) MB"
+            }
+            j["fileSystem"].dictionaryObject = fs
+        }
+        
         return j
     }
-    
 }
