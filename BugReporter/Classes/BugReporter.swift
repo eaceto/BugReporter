@@ -10,16 +10,23 @@ import UIKit
 import MessageUI
 import Photos
 
+public enum ReportingMode : String {
+    case disabled
+    case email
+}
+
 public protocol BugReporterDelegate {
     
+    // Report life cycle
+    func userDidStartAReport(_ report : Report)
+    func userDidCancelAReport(_ report : Report)
+    func userDidSendAReport(_ report : Report, using mode: ReportingMode)
+    func userDidSaveAReport(_ report : Report, using mode: ReportingMode)
+    
+    func appendMoreImages(to report: Report) -> [UIImage]?
 }
 
 public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
-    
-    public enum ReportingMode : String {
-        case disabled
-        case email
-    }
     
     //MARK: Shared Instance
     static let shared : BugReporter = {
@@ -32,9 +39,10 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     fileprivate var applicationId: String
     fileprivate var reportingMode: ReportingMode
     fileprivate var delegate : BugReporterDelegate?
+    fileprivate var currentReport : Report?
     
     //MARK: Debug Variable
-    fileprivate var debug = true
+    fileprivate var debugEnabled = false
     
     //MARK: Init
     private override init() {
@@ -77,25 +85,33 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
         })
     }
     
-    public func disableDebug() {
-        self.debug = false
+    public func debug(_ enabled : Bool) -> BugReporter {
+        self.debugEnabled = enabled
+        return BugReporter.shared
     }
     
     private func processReport(from notification : Notification) {
-        if debug {
+        if debugEnabled {
             debugPrint("didDectectAnScreenshotTaken: \(notification)")
-            debugPrint("repoting mode: \(self.reportingMode.rawValue)")
+            debugPrint("reporting mode: \(self.reportingMode.rawValue)")
+        }
+        
+        guard currentReport == nil else {
+            if debugEnabled {
+                debugPrint("Sorry, Bug Report cannot handle another bug report (yet) while there is a report in progress.")
+            }
+            return
         }
         
         guard delegate != nil else {
-            if debug {
+            if debugEnabled {
                 debugPrint("Bug Report delegate is not set. report will not be handled")
             }
             return
         }
         
         guard let topVC = topViewController() else {
-            if self.debug {
+            if self.debugEnabled {
                 debugPrint("Bug Report did not find a View Controller to present the report")
             }
             return
@@ -111,26 +127,40 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
                 report.add(image: screenshot)
             }
             
+            self.currentReport = report
+            
+            if let delegate = self.delegate {
+                
+                delegate.userDidStartAReport(report)
+                
+                if let otherImages = delegate.appendMoreImages(to: report) {
+                    for image in otherImages {
+                        report.add(image: image)
+                    }
+                }
+            }
+            
             switch self.reportingMode {
             case .email:
                 if !MFMailComposeViewController.canSendMail() {
-                    if self.debug {
+                    if self.debugEnabled {
                         debugPrint("Mail services are not available")
                     }
                     return
                 }
                 
-                if self.debug {
+                if self.debugEnabled {
                     debugPrint("Reporting information\n====================\n\(report.json())\n====================")
                 }
                 
                 self.emailReport(report, from: topVC)
                 
-                break
+                return
                 
             default: break
             }
             
+            self.currentReport = nil
         })
     }
     
@@ -144,12 +174,16 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     private func emailReport(_ report : Report, from vc : UIViewController) {
         let mail:MFMailComposeViewController = MFMailComposeViewController()
         mail.mailComposeDelegate = self
-        mail.setSubject("[\(appName())] New issue reported from Bug Reporter")
+        mail.setSubject("[\(appName())] New issue")
         mail.setToRecipients(mailRecipients())
         
         let htmlReport = String(describing: report.json()).replacingOccurrences(of: "\n", with: "</br>").replacingOccurrences(of: " ", with: "&nbsp;")
         
-        let emailBody = "<h1>Bug Report</h1>\n<code>\(htmlReport)</code>"
+        let emailBody = "<h1>Bug Report</h1>\n" +
+            "<h2>Notes</h2>\n" +
+            "<p>(insert your notes here)</p>\n" +
+            "<h2>Report</h2><code>\(htmlReport)</code>\n\n" +
+            "<p>sent with ❤️ from BugReporter</p>"
         
         var idx = 0
         for image in report.images {
@@ -198,20 +232,38 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        if debug {
-            switch result {
-            case .sent:
+        switch result {
+        case .sent:
+            if debugEnabled {
                 debugPrint("Report sent")
-                break
-            case .saved:
-                debugPrint("Report saved")
-                break
-            default:
-                debugPrint("Report not sent neither saved")
-                break
             }
+            
+            if let d = self.delegate, let report = self.currentReport {
+                d.userDidSendAReport(report, using: .email)
+            }
+            break
+        case .saved:
+            if debugEnabled {
+                debugPrint("Report saved")
+            }
+            
+            if let d = self.delegate, let report = self.currentReport {
+                d.userDidSaveAReport(report, using: .email)
+            }
+            break
+        default:
+            if debugEnabled {
+                debugPrint("Report not sent neither saved")
+            }
+            
+            if let d = self.delegate, let report = self.currentReport {
+                d.userDidCancelAReport(report)
+            }
+            break
         }
+        
+        currentReport = nil
+        
         controller.dismiss(animated: true, completion: nil)
     }
-    
 }
