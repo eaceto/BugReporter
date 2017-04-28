@@ -178,7 +178,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
         mail.setToRecipients(mailRecipients())
         
         let json = report.json()
-        let htmlReport = String(describing: json).replacingOccurrences(of: "\n", with: "</br>").replacingOccurrences(of: " ", with: "&nbsp;")
+        let htmlReport = String(describing: json).replacingOccurrences(of: "\n", with: "</br>").replacingOccurrences(of: " ", with: "&nbsp;") //FIXME
         
         let emailBody = "<h1>Bug Report</h1>\n" +
             "<h2>Notes</h2>\n" +
@@ -186,12 +186,10 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             "<h2>Report</h2><code>\(htmlReport)</code>\n\n" +
             "<p>sent with ❤️ from BugReporter</p>"
         
-        var idx = 0
-        for image in report.images {
+        for (idx, image) in report.images.enumerated() {
             let ext = "png"
             if let imageData = UIImagePNGRepresentation(image) {
                 mail.addAttachmentData(imageData, mimeType: MimeType(ext: ext), fileName: "attachment_\(idx).\(ext)")
-                idx = idx + 1
             }
         }
         

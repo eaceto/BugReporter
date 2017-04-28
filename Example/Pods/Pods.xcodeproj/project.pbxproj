@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		314DFE447DBF89829A15CD417AB0F12D /* SwiftyJSON-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B9BBA8F5B33E56C38F5546432F66B7 /* SwiftyJSON-dummy.m */; };
 		31520700509A0286B2E1C9F18E3668B6 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3329418DF937E3311A05237C54E216 /* Report.swift */; };
+		3F4ECE111EB2CD05005AB1BA /* RAMHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F4ECE0F1EB2CD05005AB1BA /* RAMHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3F4ECE121EB2CD05005AB1BA /* RAMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4ECE101EB2CD05005AB1BA /* RAMHelper.m */; };
 		3F7B21C31EB26D1600233DC7 /* DeviceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B21C21EB26D1600233DC7 /* DeviceHelper.swift */; };
 		3F7B21C51EB277D600233DC7 /* MimeTypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B21C41EB277D600233DC7 /* MimeTypeHelper.swift */; };
 		44604FED7F36C7D657372804F01B8463 /* BRJBString.h in Headers */ = {isa = PBXBuildFile; fileRef = F1693A39D6D0CDF7DC20F81672F000A1 /* BRJBString.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,6 +66,8 @@
 		2E7F7C62EE34D2D271E6E1234A2002B2 /* SwiftyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyJSON.xcconfig; sourceTree = "<group>"; };
 		30854185404619CD82596EA1F7DA81BF /* BugReporter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BugReporter.swift; sourceTree = "<group>"; };
 		32B9BBA8F5B33E56C38F5546432F66B7 /* SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
+		3F4ECE0F1EB2CD05005AB1BA /* RAMHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAMHelper.h; sourceTree = "<group>"; };
+		3F4ECE101EB2CD05005AB1BA /* RAMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAMHelper.m; sourceTree = "<group>"; };
 		3F7B21C21EB26D1600233DC7 /* DeviceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceHelper.swift; sourceTree = "<group>"; };
 		3F7B21C41EB277D600233DC7 /* MimeTypeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeHelper.swift; sourceTree = "<group>"; };
 		48F058DD78153735F79137034D82EEAD /* Pods-BugReporter_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BugReporter_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +159,47 @@
 			path = "Example/Pods/Target Support Files/BugReporter";
 			sourceTree = "<group>";
 		};
+		3F4ECE131EB2CD23005AB1BA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3F4ECE151EB2CD39005AB1BA /* JailBreak Detection */,
+				3F4ECE161EB2CD45005AB1BA /* Device Info */,
+				3F7B21C41EB277D600233DC7 /* MimeTypeHelper.swift */,
+				51E2D05028F30E1727E1A1AD277076A6 /* Base64.h */,
+				84817BF1B5767D117CE598DCC0F4C3AF /* Base64.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		3F4ECE141EB2CD2F005AB1BA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE3329418DF937E3311A05237C54E216 /* Report.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3F4ECE151EB2CD39005AB1BA /* JailBreak Detection */ = {
+			isa = PBXGroup;
+			children = (
+				B9A5FE25643FBF73FB255D31E4D1EE39 /* BRJBDetect.h */,
+				E7977E2A65F4D64963AF6C9FD519EFD1 /* BRJBDetect.m */,
+				F1693A39D6D0CDF7DC20F81672F000A1 /* BRJBString.h */,
+				B5BFCAEE4F488EB7B13AB8FEAABB22E4 /* BRJBString.m */,
+			);
+			name = "JailBreak Detection";
+			sourceTree = "<group>";
+		};
+		3F4ECE161EB2CD45005AB1BA /* Device Info */ = {
+			isa = PBXGroup;
+			children = (
+				3F7B21C21EB26D1600233DC7 /* DeviceHelper.swift */,
+				3F4ECE0F1EB2CD05005AB1BA /* RAMHelper.h */,
+				3F4ECE101EB2CD05005AB1BA /* RAMHelper.m */,
+			);
+			name = "Device Info";
+			sourceTree = "<group>";
+		};
 		455C3D34226124FFF79F55E63C1069FA /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,16 +282,9 @@
 		AFC90FE29F2F113DD3C10C190EF13C8E /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				51E2D05028F30E1727E1A1AD277076A6 /* Base64.h */,
-				84817BF1B5767D117CE598DCC0F4C3AF /* Base64.m */,
-				B9A5FE25643FBF73FB255D31E4D1EE39 /* BRJBDetect.h */,
-				E7977E2A65F4D64963AF6C9FD519EFD1 /* BRJBDetect.m */,
-				F1693A39D6D0CDF7DC20F81672F000A1 /* BRJBString.h */,
-				B5BFCAEE4F488EB7B13AB8FEAABB22E4 /* BRJBString.m */,
+				3F4ECE141EB2CD2F005AB1BA /* Model */,
+				3F4ECE131EB2CD23005AB1BA /* Helpers */,
 				30854185404619CD82596EA1F7DA81BF /* BugReporter.swift */,
-				DE3329418DF937E3311A05237C54E216 /* Report.swift */,
-				3F7B21C21EB26D1600233DC7 /* DeviceHelper.swift */,
-				3F7B21C41EB277D600233DC7 /* MimeTypeHelper.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -310,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDA2FBA0809FD124BEB3C25E9EEF1E91 /* Base64.h in Headers */,
+				3F4ECE111EB2CD05005AB1BA /* RAMHelper.h in Headers */,
 				D5E87ACF9D81BCAB31BA57EC24E8CE68 /* BRJBDetect.h in Headers */,
 				44604FED7F36C7D657372804F01B8463 /* BRJBString.h in Headers */,
 				F9B88C0DA553DEC1756B845406522133 /* BugReporter-umbrella.h in Headers */,
@@ -422,6 +461,7 @@
 				3F7B21C31EB26D1600233DC7 /* DeviceHelper.swift in Sources */,
 				57D2F19EA0A6703A63B58B3F32B30AE4 /* BugReporter.swift in Sources */,
 				31520700509A0286B2E1C9F18E3668B6 /* Report.swift in Sources */,
+				3F4ECE121EB2CD05005AB1BA /* RAMHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

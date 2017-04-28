@@ -83,6 +83,10 @@ class DeviceHelper: NSObject {
             j["fileSystem"].dictionaryObject = fs
         }
         
+        if let memory = RAMHelper.stats() as? [String : Any] {
+            j["memory"].dictionaryObject = memory
+        }
+        
         return j
     }
 }
