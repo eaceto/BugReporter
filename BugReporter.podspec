@@ -31,6 +31,10 @@ Bug Reporter is a tool that simplifies the process of reporting bugs and comment
 
   s.source_files = 'BugReporter/Classes/**/*'
 
+  s.resource_bundles = {
+     'BugReporterBundle' => ['BugReporter/Assets/**/*']
+  }
+
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'MessageUI','Photos'
   s.dependency 'SwiftyJSON', '~> 3.1'

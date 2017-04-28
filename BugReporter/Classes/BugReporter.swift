@@ -13,6 +13,7 @@ import Photos
 public enum ReportingMode : String {
     case disabled
     case email
+    case share
 }
 
 public protocol BugReporterDelegate {
@@ -38,11 +39,11 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     fileprivate var launchOptions: [UIApplicationLaunchOptionsKey: Any]?
     fileprivate var applicationId: String
     fileprivate var reportingMode: ReportingMode
-    fileprivate var delegate : BugReporterDelegate?
+    fileprivate var lifeCycleDelegate : BugReporterDelegate?
     fileprivate var currentReport : Report?
     
     //MARK: Debug Variable
-    fileprivate var debugEnabled = false
+    internal static var debugEnabled = false
     
     //MARK: Init
     private override init() {
@@ -55,9 +56,8 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
         self.initScreenshotObserver()
     }
     
-    public class func setup(with launchOptions: [UIApplicationLaunchOptionsKey: Any]?, delegate reportDelegate : BugReporterDelegate?) -> BugReporter {
+    public class func setup(with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> BugReporter {
         BugReporter.shared.launchOptions = launchOptions
-        BugReporter.shared.delegate = reportDelegate
         
         if let path = Bundle.main.path(forResource: "BugReporterSettings", ofType: "plist") {
             if let dic = NSDictionary(contentsOfFile: path) as? [String: Any] {
@@ -67,6 +67,16 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             }
         }
         
+        return BugReporter.shared
+    }
+    
+    @available(*, deprecated: 0.0.1, renamed: "setup(with:)")
+    public class func setup(with launchOptions: [UIApplicationLaunchOptionsKey: Any]?, delegate reportDelegate : BugReporterDelegate?) -> BugReporter {
+        fatalError("use setupe(with:) insted")
+    }
+
+    public func delegate(_ delegate : BugReporterDelegate) -> BugReporter {
+        BugReporter.shared.lifeCycleDelegate = delegate
         return BugReporter.shared
     }
     
@@ -86,32 +96,32 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     }
     
     public func debug(_ enabled : Bool) -> BugReporter {
-        self.debugEnabled = enabled
+        BugReporter.debugEnabled = enabled
         return BugReporter.shared
     }
     
     private func processReport(from notification : Notification) {
-        if debugEnabled {
+        if BugReporter.debugEnabled {
             debugPrint("didDectectAnScreenshotTaken: \(notification)")
             debugPrint("reporting mode: \(self.reportingMode.rawValue)")
         }
         
         guard currentReport == nil else {
-            if debugEnabled {
+            if BugReporter.debugEnabled {
                 debugPrint("Sorry, Bug Report cannot handle another bug report (yet) while there is a report in progress.")
             }
             return
         }
         
-        guard delegate != nil else {
-            if debugEnabled {
+        guard lifeCycleDelegate != nil else {
+            if BugReporter.debugEnabled {
                 debugPrint("Bug Report delegate is not set. report will not be handled")
             }
             return
         }
         
         guard let topVC = topViewController() else {
-            if self.debugEnabled {
+            if BugReporter.debugEnabled {
                 debugPrint("Bug Report did not find a View Controller to present the report")
             }
             return
@@ -129,7 +139,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             
             self.currentReport = report
             
-            if let delegate = self.delegate {
+            if let delegate = self.lifeCycleDelegate {
                 
                 delegate.userDidStartAReport(report)
                 
@@ -143,19 +153,29 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             switch self.reportingMode {
             case .email:
                 if !MFMailComposeViewController.canSendMail() {
-                    if self.debugEnabled {
+                    if BugReporter.debugEnabled {
                         debugPrint("Mail services are not available")
                     }
                     return
                 }
                 
-                if self.debugEnabled {
+                if BugReporter.debugEnabled {
                     debugPrint("Reporting information\n====================\n\(report.json())\n====================")
                 }
                 
                 self.emailReport(report, from: topVC)
                 
                 return
+                
+            case .share:
+                
+                if !ShareViaPDFHelper.share(report: report, using: topVC) {
+                    if BugReporter.debugEnabled {
+                        debugPrint("Fail to create HTML report")
+                    }
+                } else {
+                    
+                }
                 
             default: break
             }
@@ -190,8 +210,8 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             "<p>sent with ❤️ from BugReporter</p>"
         
         for (idx, image) in report.images.enumerated() {
-            let ext = "png"
-            if let imageData = UIImagePNGRepresentation(image) {
+            let ext = "jpeg"
+            if let imageData = UIImageJPEGRepresentation(image, 0.9) {
                 mail.addAttachmentData(imageData, mimeType: MimeType(ext: ext), fileName: "attachment_\(idx).\(ext)")
             }
         }
@@ -242,29 +262,29 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         switch result {
         case .sent:
-            if debugEnabled {
+            if BugReporter.debugEnabled {
                 debugPrint("Report sent")
             }
             
-            if let d = self.delegate, let report = self.currentReport {
+            if let d = self.lifeCycleDelegate, let report = self.currentReport {
                 d.userDidSendAReport(report, using: .email)
             }
             break
         case .saved:
-            if debugEnabled {
+            if BugReporter.debugEnabled {
                 debugPrint("Report saved")
             }
             
-            if let d = self.delegate, let report = self.currentReport {
+            if let d = self.lifeCycleDelegate, let report = self.currentReport {
                 d.userDidSaveAReport(report, using: .email)
             }
             break
         default:
-            if debugEnabled {
+            if BugReporter.debugEnabled {
                 debugPrint("Report not sent neither saved")
             }
             
-            if let d = self.delegate, let report = self.currentReport {
+            if let d = self.lifeCycleDelegate, let report = self.currentReport {
                 d.userDidCancelAReport(report)
             }
             break
