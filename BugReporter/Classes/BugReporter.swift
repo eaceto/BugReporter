@@ -38,7 +38,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
     fileprivate var launchOptions: [UIApplicationLaunchOptionsKey: Any]?
     fileprivate var applicationId: String
     fileprivate var reportingMode: ReportingMode
-    fileprivate var delegate : BugReporterDelegate?
+    fileprivate var lifeCycleDelegate : BugReporterDelegate?
     fileprivate var currentReport : Report?
     
     //MARK: Debug Variable
@@ -55,9 +55,8 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
         self.initScreenshotObserver()
     }
     
-    public class func setup(with launchOptions: [UIApplicationLaunchOptionsKey: Any]?, delegate reportDelegate : BugReporterDelegate?) -> BugReporter {
+    public class func setup(with launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> BugReporter {
         BugReporter.shared.launchOptions = launchOptions
-        BugReporter.shared.delegate = reportDelegate
         
         if let path = Bundle.main.path(forResource: "BugReporterSettings", ofType: "plist") {
             if let dic = NSDictionary(contentsOfFile: path) as? [String: Any] {
@@ -67,6 +66,16 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             }
         }
         
+        return BugReporter.shared
+    }
+    
+    @available(*, deprecated: 0.0.1, renamed: "setup(with:)")
+    public class func setup(with launchOptions: [UIApplicationLaunchOptionsKey: Any]?, delegate reportDelegate : BugReporterDelegate?) -> BugReporter {
+        fatalError("use setupe(with:) insted")
+    }
+
+    public func delegate(_ delegate : BugReporterDelegate) -> BugReporter {
+        BugReporter.shared.lifeCycleDelegate = delegate
         return BugReporter.shared
     }
     
@@ -103,7 +112,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             return
         }
         
-        guard delegate != nil else {
+        guard lifeCycleDelegate != nil else {
             if debugEnabled {
                 debugPrint("Bug Report delegate is not set. report will not be handled")
             }
@@ -129,7 +138,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
             
             self.currentReport = report
             
-            if let delegate = self.delegate {
+            if let delegate = self.lifeCycleDelegate {
                 
                 delegate.userDidStartAReport(report)
                 
@@ -246,7 +255,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
                 debugPrint("Report sent")
             }
             
-            if let d = self.delegate, let report = self.currentReport {
+            if let d = self.lifeCycleDelegate, let report = self.currentReport {
                 d.userDidSendAReport(report, using: .email)
             }
             break
@@ -255,7 +264,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
                 debugPrint("Report saved")
             }
             
-            if let d = self.delegate, let report = self.currentReport {
+            if let d = self.lifeCycleDelegate, let report = self.currentReport {
                 d.userDidSaveAReport(report, using: .email)
             }
             break
@@ -264,7 +273,7 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
                 debugPrint("Report not sent neither saved")
             }
             
-            if let d = self.delegate, let report = self.currentReport {
+            if let d = self.lifeCycleDelegate, let report = self.currentReport {
                 d.userDidCancelAReport(report)
             }
             break

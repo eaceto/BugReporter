@@ -15,8 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BugReporterDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        _ = BugReporter.setup(with: launchOptions, delegate: self)    // call as soon as possible
+
+        _ = BugReporter.setup(with: launchOptions)  // call as soon as possible
+                       .delegate(self)  // set in order to receive events
                        .report(using: .email)   // can set it or change it later
                        .debug(false)  // enable or disable debug at any time
         
