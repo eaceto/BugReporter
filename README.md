@@ -9,6 +9,8 @@
 BugReporter is a simple and elegant bug reporting tool for you apps.
 
 - [Features](#features)
+- [How to setup](#how-to-setup)
+- [What BugReporter is not](#what-bugreporter-is-not)
 - [Requirements](#requirements)
 - [Communication](#communication)
 - [Installation](#installation)
@@ -18,14 +20,46 @@ BugReporter is a simple and elegant bug reporting tool for you apps.
 
 ## Features
 
-- [x] Capture 'take screenshot' event and fire a report
+- [x] Detect 'take screenshot' event and fire a report
 - [x] Create a report with information about the device and the application
 - [x] Send report using email as channel
+- [x] Send report using UIActivityViewController as channel
 - [x] Load configuration from a property file (plist)
 - [x] Notify reporting life cycle
+- [x] Detect shake gesture and fire a report
 - [ ] Attach multiple images to a report
 - [ ] Save report into file system if cannot be sent
 - [ ] Send report to a backend
+
+## What BugReporter is not
+
+- BugReporter **is not** a crash reporting tool (like Crashlytics).
+- BugReporter **will not** take screenshots of your app unless the user triggers a report event.
+
+## How to setup
+
+Include a file named *BugReporterSettings.plist* inside your project. The content of this property file should have at least one property called **applicationId** with a non-empty string value. This property will be used in future versions when integrating with a backend.
+
+### reportsEMail
+This property lets you specify a list of emails, used as default addresses when sending a report through email.
+
+### Example file
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+    	<key>applicationId</key>
+    	<string>YOUR-APP-ID</string>
+    	<key>reportEMails</key>
+    	<array>
+    		<string>developer_1_email@your-company.com</string>
+        <string>developer_2_email@your-company.com</string>
+        <string>qa_guy@your-company.com</string>        
+    	</array>
+    </dict>
+    </plist>
+
 
 ## Requirements
 
