@@ -13,10 +13,10 @@
 		3F4ECE121EB2CD05005AB1BA /* RAMHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F4ECE101EB2CD05005AB1BA /* RAMHelper.m */; };
 		3F7B21C31EB26D1600233DC7 /* DeviceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B21C21EB26D1600233DC7 /* DeviceHelper.swift */; };
 		3F7B21C51EB277D600233DC7 /* MimeTypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B21C41EB277D600233DC7 /* MimeTypeHelper.swift */; };
-		3F7FB3941EB2D6A1003D27C4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3901EB2D6A1003D27C4 /* Constants.swift */; };
-		3F7FB3951EB2D6A1003D27C4 /* ParseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3911EB2D6A1003D27C4 /* ParseError.swift */; };
-		3F7FB3961EB2D6A1003D27C4 /* String+HTMLEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3921EB2D6A1003D27C4 /* String+HTMLEntities.swift */; };
-		3F7FB3971EB2D6A1003D27C4 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3931EB2D6A1003D27C4 /* Utilities.swift */; };
+		3F7FB3A41EB2DA8C003D27C4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3A01EB2DA8C003D27C4 /* Constants.swift */; };
+		3F7FB3A51EB2DA8C003D27C4 /* ParseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3A11EB2DA8C003D27C4 /* ParseError.swift */; };
+		3F7FB3A61EB2DA8C003D27C4 /* String+HTMLEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3A21EB2DA8C003D27C4 /* String+HTMLEntities.swift */; };
+		3F7FB3A71EB2DA8C003D27C4 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7FB3A31EB2DA8C003D27C4 /* Utilities.swift */; };
 		44604FED7F36C7D657372804F01B8463 /* BRJBString.h in Headers */ = {isa = PBXBuildFile; fileRef = F1693A39D6D0CDF7DC20F81672F000A1 /* BRJBString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48C1C0DECA77FC302F9D553B1DAEE2E8 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 84817BF1B5767D117CE598DCC0F4C3AF /* Base64.m */; };
 		4D0831E8523B6194C29755E19C8B8F0A /* BRJBDetect.m in Sources */ = {isa = PBXBuildFile; fileRef = E7977E2A65F4D64963AF6C9FD519EFD1 /* BRJBDetect.m */; };
@@ -74,10 +74,10 @@
 		3F4ECE101EB2CD05005AB1BA /* RAMHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAMHelper.m; sourceTree = "<group>"; };
 		3F7B21C21EB26D1600233DC7 /* DeviceHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceHelper.swift; sourceTree = "<group>"; };
 		3F7B21C41EB277D600233DC7 /* MimeTypeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MimeTypeHelper.swift; sourceTree = "<group>"; };
-		3F7FB3901EB2D6A1003D27C4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "swift-html-entities/Sources/HTMLEntities/Constants.swift"; sourceTree = "<group>"; };
-		3F7FB3911EB2D6A1003D27C4 /* ParseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseError.swift; path = "swift-html-entities/Sources/HTMLEntities/ParseError.swift"; sourceTree = "<group>"; };
-		3F7FB3921EB2D6A1003D27C4 /* String+HTMLEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+HTMLEntities.swift"; path = "swift-html-entities/Sources/HTMLEntities/String+HTMLEntities.swift"; sourceTree = "<group>"; };
-		3F7FB3931EB2D6A1003D27C4 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = "swift-html-entities/Sources/HTMLEntities/Utilities.swift"; sourceTree = "<group>"; };
+		3F7FB3A01EB2DA8C003D27C4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3F7FB3A11EB2DA8C003D27C4 /* ParseError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseError.swift; sourceTree = "<group>"; };
+		3F7FB3A21EB2DA8C003D27C4 /* String+HTMLEntities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HTMLEntities.swift"; sourceTree = "<group>"; };
+		3F7FB3A31EB2DA8C003D27C4 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		48F058DD78153735F79137034D82EEAD /* Pods-BugReporter_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BugReporter_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4AC4DA7222BB535D637DB499643F08B2 /* BugReporter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BugReporter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51E2D05028F30E1727E1A1AD277076A6 /* Base64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
@@ -219,10 +219,10 @@
 		3F7FB38F1EB2D685003D27C4 /* swift-html-entities */ = {
 			isa = PBXGroup;
 			children = (
-				3F7FB3901EB2D6A1003D27C4 /* Constants.swift */,
-				3F7FB3911EB2D6A1003D27C4 /* ParseError.swift */,
-				3F7FB3921EB2D6A1003D27C4 /* String+HTMLEntities.swift */,
-				3F7FB3931EB2D6A1003D27C4 /* Utilities.swift */,
+				3F7FB3A01EB2DA8C003D27C4 /* Constants.swift */,
+				3F7FB3A11EB2DA8C003D27C4 /* ParseError.swift */,
+				3F7FB3A21EB2DA8C003D27C4 /* String+HTMLEntities.swift */,
+				3F7FB3A31EB2DA8C003D27C4 /* Utilities.swift */,
 			);
 			name = "swift-html-entities";
 			sourceTree = "<group>";
@@ -485,13 +485,13 @@
 				3F7B21C51EB277D600233DC7 /* MimeTypeHelper.swift in Sources */,
 				4D0831E8523B6194C29755E19C8B8F0A /* BRJBDetect.m in Sources */,
 				FAF3B6ED448674DDB5092A29FEBA10AD /* BRJBString.m in Sources */,
-				3F7FB3971EB2D6A1003D27C4 /* Utilities.swift in Sources */,
+				3F7FB3A71EB2DA8C003D27C4 /* Utilities.swift in Sources */,
 				60E4413C105BB3B773339A00F600D3C6 /* BugReporter-dummy.m in Sources */,
-				3F7FB3941EB2D6A1003D27C4 /* Constants.swift in Sources */,
+				3F7FB3A41EB2DA8C003D27C4 /* Constants.swift in Sources */,
 				3F7B21C31EB26D1600233DC7 /* DeviceHelper.swift in Sources */,
 				57D2F19EA0A6703A63B58B3F32B30AE4 /* BugReporter.swift in Sources */,
-				3F7FB3961EB2D6A1003D27C4 /* String+HTMLEntities.swift in Sources */,
-				3F7FB3951EB2D6A1003D27C4 /* ParseError.swift in Sources */,
+				3F7FB3A61EB2DA8C003D27C4 /* String+HTMLEntities.swift in Sources */,
+				3F7FB3A51EB2DA8C003D27C4 /* ParseError.swift in Sources */,
 				31520700509A0286B2E1C9F18E3668B6 /* Report.swift in Sources */,
 				3F4ECE121EB2CD05005AB1BA /* RAMHelper.m in Sources */,
 			);
