@@ -114,7 +114,7 @@ internal let mimeTypes = [
     "asf": "video/x-ms-asf",
     "wmv": "video/x-ms-wmv",
     "avi": "video/x-msvideo",
-     "md": "text/markdown"
+    "md": "text/markdown"
 ]
 
 internal func MimeType(ext: String?) -> String {

@@ -94,4 +94,45 @@ public class Report: NSObject {
     internal func from(viewController : UIViewController) {
         self.currentViewController = viewController
     }
+    
+    internal func writeToDisk() -> Bool {
+        let path = filePath()
+        do{
+            let json = String(describing: self.json())
+            try json.write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
+            return true
+        }catch{
+            return false
+        }
+    }
+    
+    internal func deleteFromDisk() -> Bool {
+        let path = filePath()
+        do {
+            try FileManager.default.removeItem(atPath: path)
+            return true
+        }
+        catch {}
+        return false
+    }
+    
+    internal func fileData() -> Data? {
+        let path = filePath()
+        
+        let file: FileHandle? = FileHandle(forReadingAtPath: path)
+        
+        if file != nil {
+            let data = file?.readDataToEndOfFile()
+            file?.closeFile()
+            return data
+        }
+        return nil
+    }
+    
+    internal func filePath() -> String {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        
+        let fileName = "bugreport_\(UInt64(created.timeIntervalSince1970)).json"
+        return documentsPath.appendingPathComponent(fileName)
+    }
 }
