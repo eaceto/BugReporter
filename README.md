@@ -24,6 +24,8 @@ BugReporter is a simple and elegant bug reporting tool for you apps.
 - [x] Create a report with information about the device and the application
 - [x] Send report using email as channel
 - [x] Send report using UIActivityViewController as channel
+- [x] User can select how to send reports
+- [x] User can dismiss sending a report
 - [x] Load configuration from a property file (plist)
 - [x] Notify reporting life cycle
 - [ ] Detect shake gesture and fire a report
@@ -53,9 +55,9 @@ This property lets you specify a list of emails, used as default addresses when 
     	<string>YOUR-APP-ID</string>
     	<key>reportEMails</key>
     	<array>
-    		<string>developer_1_email@your-company.com</string>
-            <string>developer_2_email@your-company.com</string>
-            <string>qa_guy@your-company.com</string>        
+                <string>developer_1_email@your-company.com</string>
+                <string>developer_2_email@your-company.com</string>
+                <string>qa_guy@your-company.com</string>        
     	</array>
     </dict>
     </plist>
