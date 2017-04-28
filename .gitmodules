@@ -1,0 +1,3 @@
+[submodule "BugReporter/Classes/swift-html-entities"]
+	path = BugReporter/Classes/swift-html-entities
+	url = https://github.com/IBM-Swift/swift-html-entities.git
