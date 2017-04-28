@@ -14,6 +14,7 @@ public enum ReportingMode : String {
     case disabled
     case email
     case share
+    case userSelect
 }
 
 public protocol BugReporterDelegate {
@@ -173,11 +174,17 @@ public class BugReporter: NSObject, MFMailComposeViewControllerDelegate {
                     if BugReporter.debugEnabled {
                         debugPrint("Fail to create HTML report")
                     }
-                } else {
-                    
                 }
+                break
+            case .userSelect:
                 
-            default: break
+
+                break
+            case .disabled:
+                if BugReporter.debugEnabled {
+                    debugPrint("Reporting is disabled")
+                }
+                break
             }
             
             self.currentReport = nil
