@@ -22,6 +22,7 @@ BugReporter is a simple and elegant bug reporting tool for you apps.
 - [x] Create a report with information about the device and the application
 - [x] Send report using email as channel
 - [x] Load configuration from a property file (plist)
+- [x] Notify reporting life cycle
 - [ ] Attach multiple images to a report
 - [ ] Save report into file system if cannot be sent
 - [ ] Send report to a backend
