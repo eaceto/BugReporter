@@ -32,7 +32,7 @@ Bug Reporter is a tool that simplifies the process of reporting bugs and comment
   s.source_files = 'BugReporter/Classes/**/*'
 
   s.resource_bundles = {
-     'BugReporterBundle' => ['BugReporter/Assets/**/*']
+     'BugReporter' => ['BugReporter/Assets/**/*']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

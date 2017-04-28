@@ -14,7 +14,7 @@ internal class LibHelper: NSObject {
     
     class func libBundle() -> Bundle? {
         let podBundle = Bundle(for: LibHelper.self)
-        if let url = podBundle.url(forResource: "BugReporterBundle", withExtension: "bundle") {
+        if let url = podBundle.url(forResource: "BugReporter", withExtension: "bundle") {
             return Bundle(url: url)
         }
         return nil
