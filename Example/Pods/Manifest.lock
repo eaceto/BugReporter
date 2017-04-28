@@ -1,5 +1,5 @@
 PODS:
-  - BugReporter (0.1.7):
+  - BugReporter (0.1.8):
     - SwiftyJSON (~> 3.1)
   - SwiftyJSON (3.1.4)
 
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BugReporter: f1be611fecb41c6881bc877274a289ac1766b4fb
+  BugReporter: 7d76aa2b6871cbce58d7c2d2badfef0e7a7e5ede
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
 PODFILE CHECKSUM: 75b07b2e87f0691d04d3e3d6ef3afebb7c5b62f7
