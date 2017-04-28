@@ -19,7 +19,6 @@
 /* Begin PBXFileReference section */
 		1424469BF28118CBAB1DCA9C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		2B5680FE0866582717A35830 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		3B799FC860A6DAF3B8D55547 /* Pods-BugReporter_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugReporter_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BugReporter_Tests/Pods-BugReporter_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F7B21C01EB2693400233DC7 /* BugReporterSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BugReporterSettings.plist; sourceTree = "<group>"; };
 		419C1D506C383DF3792ED02F /* Pods_BugReporter_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BugReporter_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* BugReporter_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugReporter_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,7 +28,6 @@
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		6E75EE4D2AF198E91ED81EAD /* Pods-BugReporter_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugReporter_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BugReporter_Tests/Pods-BugReporter_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		96F307EB78F99EDBC245F157 /* BugReporter.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = BugReporter.podspec; path = ../BugReporter.podspec; sourceTree = "<group>"; };
 		E90463FC7A2BC384E9E3991A /* Pods-BugReporter_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugReporter_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BugReporter_Example/Pods-BugReporter_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F40D979A1F14701772FA986B /* Pods-BugReporter_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BugReporter_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-BugReporter_Example/Pods-BugReporter_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -53,8 +51,6 @@
 			children = (
 				E90463FC7A2BC384E9E3991A /* Pods-BugReporter_Example.debug.xcconfig */,
 				F40D979A1F14701772FA986B /* Pods-BugReporter_Example.release.xcconfig */,
-				3B799FC860A6DAF3B8D55547 /* Pods-BugReporter_Tests.debug.xcconfig */,
-				6E75EE4D2AF198E91ED81EAD /* Pods-BugReporter_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";

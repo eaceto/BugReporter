@@ -40,6 +40,7 @@ public class Report: NSObject {
                       "creationTimestamp" : UInt64(self.created.timeIntervalSince1970),
                       "creationDate" : self.created.description])
     
+        j["bugReporter"].dictionaryObject = ["version" : LibHelper.LIB_VERSION]
         j["application"] = applicationDescription()
         j["device"] = DeviceHelper.deviceDescription()
         
@@ -68,23 +69,63 @@ public class Report: NSObject {
     internal func applicationDescription() -> JSON {
         var j = JSON(["bundleId" : self.bundleId ?? "",])
         
-        if let name = Bundle.main.infoDictionary?["CFBundleName"] as? String {
+        if let name = ApplicationHelper.name() {
             j["name"].string = name
         }
         
-        if let name = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
-            j["displayName"].string = name
+        if let displayName = ApplicationHelper.displayName() {
+            j["displayName"].string = displayName
         }
         
-        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+        if let appVersion = ApplicationHelper.appVersion() {
             j["version"].string = appVersion
         }
         
-        if let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+        if let build = ApplicationHelper.build() {
             j["build"].string = build
         }
                 
         return j
+    }
+    
+    //FIXME implement render protocol and different kinds of render
+    internal func createPDF() -> Data? {
+        guard let bundle = LibHelper.libBundle() else {
+            return nil
+        }
+        
+        do {
+            // Load the invoice HTML template code into a String variable.
+            var html = try String(contentsOfFile: bundle.path(forResource: "PDFReportTemplate", ofType: "html")!)
+
+            let jsonReport = String(describing: json()).htmlEscape()
+                .replacingOccurrences(of: "\n", with: "</br>")
+                .replacingOccurrences(of: " ", with: "&nbsp;")
+            
+            html = html.replacingOccurrences(of: "#JSON_REPORT#", with: jsonReport)
+            
+            if let name = ApplicationHelper.name() {
+                html = html.replacingOccurrences(of: "#APP_NAME#", with: name.htmlEscape())
+            } else {
+                html = html.replacingOccurrences(of: "#APP_NAME#", with: "undefined")
+            }
+            
+            guard let pdfData = ShareViaPDFHelper.render(html: html) else {
+                if BugReporter.debugEnabled {
+                    debugPrint("Cannot create PDF file")
+                }
+                return nil
+            }
+            
+            return pdfData
+        } catch {
+            if BugReporter.debugEnabled {
+                debugPrint("Exception creating HTML report")
+            }
+
+        }
+        
+        return nil
     }
     
     internal func add(image : UIImage) {
@@ -131,8 +172,10 @@ public class Report: NSObject {
     
     internal func filePath() -> String {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-        
-        let fileName = "bugreport_\(UInt64(created.timeIntervalSince1970)).json"
-        return documentsPath.appendingPathComponent(fileName)
+        return documentsPath.appendingPathComponent(fileName(extension: "json"))
+    }
+    
+    internal func fileName(extension ext : String) -> String {
+        return "bugreport_\(UInt64(created.timeIntervalSince1970)).\(ext)"
     }
 }

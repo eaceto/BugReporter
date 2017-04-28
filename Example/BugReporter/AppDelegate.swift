@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, BugReporterDelegate {
 
         _ = BugReporter.setup(with: launchOptions)  // call as soon as possible
                        .delegate(self)  // set in order to receive events
-                       .report(using: .email)   // can set it or change it later
+                       .report(using: .share)   // can set it or change it later
                        .debug(false)  // enable or disable debug at any time
         
         return true
